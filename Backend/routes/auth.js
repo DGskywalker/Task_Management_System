@@ -37,45 +37,42 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-
 // ✅ LOGIN ROUTE
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-  
-      if (result.rows.length === 0) {
-        console.log('❌ User not found');
-        return res.status(401).json({ message: 'Invalid email or password' });
-      }
-  
-      const user = result.rows[0];
-      
-  
-      if (!user.password) {
-        console.log('❌ User has no password field!');
-        return res.status(500).json({ message: 'User record corrupted' });
-      }
-  
-      const isMatch = await bcrypt.compare(password, user.password);
-      
-  
-      if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid email or password' });
-      }
+  const { email, password } = req.body;
 
-      res.status(200).json({
-        message: 'Login successful',
-        userId: user.id,
-        userName: user.name,
-        email: user.email
-      });
-  
-    } catch (err) {
-        
-      res.status(500).json({ message: 'Server error during login' });
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+    if (result.rows.length === 0) {
+      console.log('❌ Login failed: User not found');
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
-  });
+
+    const user = result.rows[0];
+
+    if (!user.password) {
+      console.log('❌ Login failed: Password field missing');
+      return res.status(500).json({ message: 'User record corrupted' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      console.log('❌ Login failed: Incorrect password');
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    res.status(200).json({
+      message: 'Login successful',
+      userId: user.id,
+      userName: user.name,
+      email: user.email
+    });
+  } catch (err) {
+    console.error('❌ Login Error:', err.message);
+    res.status(500).json({ message: 'Server error during login' });
+  }
+});
 
 module.exports = router;

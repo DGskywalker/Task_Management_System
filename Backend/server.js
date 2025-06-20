@@ -9,24 +9,29 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// ✅ Middleware
 app.use(cors());
 app.use(express.json());
 
-// Serve static frontend files
+// ✅ Serve static frontend files (ensure this path is correct on Render)
 app.use(express.static(path.join(__dirname, '../Frontend')));
 
-// ROUTES
+// ✅ Import routes
 const authRoutes = require('./routes/auth');
 const passwordResetRoutes = require('./routes/passwordReset');
+const taskRoutes = require('./routes/tasks');
 
-// Attach routes
+// ✅ Attach routes
 app.use('/api/auth', authRoutes);
 app.use('/api/password', passwordResetRoutes);
+app.use('/api/tasks', taskRoutes);
 
-// Start server
+// ✅ Catch-all for frontend routing (for SPA deployments if needed)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../Frontend', 'index.html'));
+});
+
+// ✅ Start the server
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
 });
-const taskRoutes = require('./routes/tasks');
-app.use('/api/tasks', taskRoutes);

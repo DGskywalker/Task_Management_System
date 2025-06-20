@@ -10,8 +10,8 @@ router.post('/new', async (req, res) => {
     description,
     deadline,
     priority,
-    status,
-    notes,
+    status = 'Not Started',
+    notes = '',
     category
   } = req.body;
 
@@ -20,12 +20,12 @@ router.post('/new', async (req, res) => {
       `INSERT INTO tasks (user_id, title, description, deadline, priority, status, notes, category)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
        RETURNING *`,
-      [userId, title, description, deadline, priority, status || 'Not Started', notes || '', category]
+      [userId, title, description, deadline, priority, status, notes, category]
     );
 
     res.status(201).json({ message: 'Task added successfully', task: result.rows[0] });
   } catch (err) {
-    console.error('❌ Error adding task:', err.message);
+    console.error('❌ Error adding task:', err.stack);
     res.status(500).json({ message: 'Server error while adding task' });
   }
 });
@@ -42,7 +42,7 @@ router.get('/user/:userId', async (req, res) => {
 
     res.status(200).json({ tasks: result.rows });
   } catch (err) {
-    console.error('❌ Error fetching tasks:', err.message);
+    console.error('❌ Error fetching tasks:', err.stack);
     res.status(500).json({ message: 'Server error while fetching tasks' });
   }
 });
@@ -63,7 +63,7 @@ router.delete('/:taskId', async (req, res) => {
 
     res.status(200).json({ message: 'Task deleted successfully' });
   } catch (err) {
-    console.error('❌ Error deleting task:', err.message);
+    console.error('❌ Error deleting task:', err.stack);
     res.status(500).json({ message: 'Server error while deleting task' });
   }
 });
@@ -85,7 +85,7 @@ router.put('/:taskId/status', async (req, res) => {
 
     res.status(200).json({ message: 'Status updated', task: result.rows[0] });
   } catch (err) {
-    console.error('❌ Error updating task status:', err.message);
+    console.error('❌ Error updating task status:', err.stack);
     res.status(500).json({ message: 'Server error while updating status' });
   }
 });
