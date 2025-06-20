@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BASE_URL = 'https://task-backend-dg.onrender.com'; // ✅ Replace with your actual Render backend URL if different
+    const BASE_URL = 'https://task-management-system-d7gl.onrender.com'; // ✅ Replace with your actual Render backend URL if different
   
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) return (window.location.href = 'index.html');
