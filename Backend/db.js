@@ -8,6 +8,9 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
   database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: false  // Required for connecting to Render PostgreSQL
+  }
 });
 
 module.exports = pool;
