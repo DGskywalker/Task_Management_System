@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .left-panel {
+    position: absolute;
+    left: 150px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 500px;
+    color: white;
+    z-index: 2;
+  }
+  
+  .left-panel h1 {
+    font-size: 60px;
+    line-height: 1.2;
+    font-weight: 700;
+    text-shadow: 1px 1px 8px rgba(0,0,0,0.4);
+  }
+  
+  #bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+  padding-right: 60px;
+  }
+  
+  .login-card {
+  width: 480px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 50px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  }
+  
+  .login-card h2 {
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  .login-card p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #374151;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    transition: border 0.3s ease;
+  }
+  
+  .input-group input:focus {
+    border-color: #2563eb;
+    outline: none;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #4b5563;
+  }
+  
+  .actions a {
+    text-decoration: none;
+    color: #2563eb;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #1e40af;
+  }
+  
+  .signup-link {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  .signup-link a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  

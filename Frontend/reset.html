@@ -1,0 +1,24 @@
+<form id="reset-form">
+    <h2>Reset Your Password</h2>
+    <input type="password" id="new-password" placeholder="New password" required />
+    <button type="submit">Reset Password</button>
+  </form>
+  
+  <script>
+    const form = document.getElementById('reset-form');
+    const token = window.location.pathname.split('/').pop();
+  
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = document.getElementById('new-password').value;
+  
+      const res = await fetch(`http://localhost:5000/api/reset-password/${token}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ password })
+      });
+  
+      alert(await res.text());
+    });
+  </script>
+  

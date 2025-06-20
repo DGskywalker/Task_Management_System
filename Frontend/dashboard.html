@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="./dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="dashboard-container">
+
+    <!-- 🔘 Dark Mode Toggle -->
+    <button id="toggle-dark-mode" class="dark-mode-toggle">🌙 Toggle Dark Mode</button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile">
+        <label for="avatar-upload">
+          <img src="default-avatar.png" alt="User Avatar" id="avatar-preview" class="avatar" />
+        </label>
+        <input type="file" id="avatar-upload" accept="image/*" style="display: none;" />
+        <button id="remove-avatar">Remove Photo</button>
+        <h3 id="user-name">User Name</h3>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#" data-section="home">🏠 Home</a>
+        <a href="#" data-section="projects">📁 Projects</a>
+        <a href="#" data-section="new-task">📝 New Task</a>
+        <a href="index.html">🚪 Logout</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Home -->
+      <section id="home" class="section active">
+        <h1>Welcome back, <span id="welcome-name">User</span> 👋</h1>
+        <div class="stats">
+          <div class="stat-card" id="stat-completed">✅ Completed Tasks: 0</div>
+          <div class="stat-card" id="stat-inprogress">⚙️ In Progress: 0</div>
+          <div class="stat-card" id="stat-pending">⏸️ Not Started: 0</div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects" class="section">
+        <h2>📁 Your Tasks</h2>
+
+        <!-- 🔃 Filters -->
+        <div class="task-controls">
+          <select id="filter-status">
+            <option value="All">🔍 Filter by Status</option>
+            <option value="Not Started">⏸️ Not Started</option>
+            <option value="In Progress">⚙️ In Progress</option>
+            <option value="Completed">✅ Completed</option>
+          </select>
+
+          <select id="sort-tasks">
+            <option value="latest">🕒 Sort by Latest</option>
+            <option value="priority">🔺 Sort by Priority</option>
+            <option value="deadline">📅 Sort by Deadline</option>
+          </select>
+        </div>
+
+        <!-- ⏳ Loading Spinner -->
+        <div id="loading-spinner" class="spinner" style="display: none;"></div>
+
+        <!-- Task List Container -->
+        <div id="task-list-container">
+          <div id="task-list" class="task-list">
+            <!-- Tasks will be added here dynamically -->
+          </div>
+        </div>
+
+        <!-- Detail View -->
+        <div id="task-detail-section" style="display: none;">
+          <button id="back-to-list" style="margin-bottom: 1rem;">⬅ Back to Task List</button>
+          <div id="task-detail-content" class="task-detail-content">
+            <!-- Task details will go here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- New Task -->
+      <section id="new-task" class="section">
+        <button id="create-task-btn">➕ Create New Task</button>
+
+        <form id="task-form" style="display: none;">
+          <label for="title">Task Title</label>
+          <input type="text" id="title" name="title" placeholder="Enter task title" required />
+
+          <label for="description">Task Description</label>
+          <textarea id="description" name="description" placeholder="Describe the task" required></textarea>
+
+          <label for="deadline">Deadline</label>
+          <input type="date" id="deadline" name="deadline" required />
+
+          <label for="category">Category</label>
+          <input type="text" id="category" name="category" placeholder="e.g., Design, Development, QA" required />
+
+          <label for="priority">Priority</label>
+          <select id="priority" name="priority" required>
+            <option value="">Select priority</option>
+            <option value="High">🔴 High</option>
+            <option value="Medium">🟡 Medium</option>
+            <option value="Low">🟢 Low</option>
+          </select>
+
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            <option value="">Select status</option>
+            <option value="Not Started">⏸️ Not Started</option>
+            <option value="In Progress">⚙️ In Progress</option>
+            <option value="Completed">✅ Completed</option>
+          </select>
+
+          <label for="notes">Additional Notes</label>
+          <textarea id="notes" name="notes" placeholder="Any additional details..."></textarea>
+
+          <button type="submit">💾 Save Task</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

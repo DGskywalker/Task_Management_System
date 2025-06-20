@@ -1,0 +1,348 @@
+/* ✅ Base Layout */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+}
+
+.dashboard-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1f2937;
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  border: 2px solid #fff;
+  transition: transform 0.2s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+#remove-avatar {
+  margin-top: 0.75rem;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: block;
+  text-align: center;
+}
+
+#remove-avatar:hover {
+  background-color: #c0392b;
+}
+
+#user-name {
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  transition: background 0.3s;
+  text-align: center;
+}
+
+.nav-links a:hover {
+  background-color: #374151;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f9fafb;
+  overflow-y: auto;
+}
+
+.stats {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+/* ✅ Task Creation Form */
+#create-task-btn {
+  display: block;
+  margin: 0 auto 2rem auto;
+  background: linear-gradient(to right, #6366f1, #3b82f6);
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 280px;
+  text-align: center;
+}
+
+#create-task-btn:hover {
+  background: linear-gradient(to right, #4f46e5, #2563eb);
+  transform: scale(1.03);
+}
+
+#task-form {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#task-form label {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+#task-form input,
+#task-form textarea,
+#task-form select {
+  padding: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+#task-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+#task-form button {
+  margin-top: 1rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+#task-form button:hover {
+  background-color: #059669;
+}
+
+/* ✅ Task List */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task-card {
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.task-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.task-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #111827;
+}
+
+.task-deadline {
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.task-status-text {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.task-card .delete-btn {
+  margin-left: 1rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* ✅ Task Detail */
+#task-detail-section {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 1rem;
+}
+
+#task-detail-content {
+  margin-top: 1rem;
+  line-height: 1.6;
+  color: #374151;
+  font-size: 1rem;
+}
+
+#back-to-list {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+#back-to-list:hover {
+  background-color: #2563eb;
+}
+
+/* 🔍 Filters & Spinner */
+.task-controls {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.task-controls select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3b82f6;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 🌙 Dark Mode Support */
+body.dark-mode {
+  background-color: #111827;
+  color: #f3f4f6;
+}
+
+body.dark-mode .main-content,
+body.dark-mode .task-card,
+body.dark-mode .stat-card,
+body.dark-mode .task-controls select {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+body.dark-mode .sidebar {
+  background-color: #111827;
+}
+
+#toggle-dark-mode {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #374151;
+  color: #f9fafb;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+#toggle-dark-mode:hover {
+  background-color: #1f2937;
+}
