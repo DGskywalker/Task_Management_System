@@ -2,15 +2,17 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+// SSL is on by default because Render's managed Postgres requires it.
+// Set DB_SSL=false for a local or Docker database.
+const useSsl = process.env.DB_SSL !== 'false';
+
 const pool = new Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: 5432, // Hardcoded because Render always uses this
-  ssl: {
-    rejectUnauthorized: false // Required for Render's managed Postgres
-  }
+  port: Number(process.env.DB_PORT) || 5432,
+  ssl: useSsl ? { rejectUnauthorized: false } : false
 });
 
 module.exports = pool;

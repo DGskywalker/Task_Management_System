@@ -1,24 +1,29 @@
-<form id="reset-form">
-    <h2>Reset Your Password</h2>
-    <input type="password" id="new-password" placeholder="New password" required />
-    <button type="submit">Reset Password</button>
-  </form>
-  
-  <script>
-    const form = document.getElementById('reset-form');
-    const token = window.location.pathname.split('/').pop();
-  
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const password = document.getElementById('new-password').value;
-  
-      const res = await fetch(`http://localhost:5000/api/reset-password/${token}`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ password })
-      });
-  
-      alert(await res.text());
-    });
-  </script>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reset Password | YourCompany</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="backgroundvideo.mp4" type="video/mp4" />
+  </video>
+  <div class="login-wrapper">
+    <form class="login-card" id="reset-form">
+      <h2>Reset Your Password</h2>
+      <p>Choose a new password (at least 8 characters)</p>
+      <div class="input-group">
+        <label for="new-password">New password</label>
+        <input type="password" id="new-password" placeholder="••••••••" minlength="8" maxlength="72" required />
+      </div>
+      <button type="submit">Reset Password</button>
+      <p class="signup-link"><a href="index.html">Back to login</a></p>
+    </form>
+  </div>
+  <script src="api.js"></script>
+  <script src="reset.js"></script>
+</body>
+</html>

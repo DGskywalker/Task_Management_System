@@ -1,0 +1,40 @@
+# Local stack: the app plus PostgreSQL, with schema.sql loaded on first start.
+# Usage: JWT_SECRET=<random string> docker compose up --build
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: tasks
+      POSTGRES_PASSWORD: tasks
+      POSTGRES_DB: tasks
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tasks -d tasks"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      APP_URL: http://localhost:5000
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET before running docker compose}
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: tasks
+      DB_PASSWORD: tasks
+      DB_NAME: tasks
+      DB_SSL: "false"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-data:

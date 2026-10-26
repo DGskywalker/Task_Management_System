@@ -1,6 +1,29 @@
-<form action="http://localhost:5000/api/forgot-password" method="POST">
-    <h2>Forgot Password?</h2>
-    <label>Email: <input type="email" name="email" required /></label>
-    <button type="submit">Send Reset Link</button>
-  </form>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Password | YourCompany</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="backgroundvideo.mp4" type="video/mp4" />
+  </video>
+  <div class="login-wrapper">
+    <form class="login-card" id="forgot-form">
+      <h2>Forgot Password?</h2>
+      <p>Enter your email and we will send you a reset link</p>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+      </div>
+      <button type="submit">Send Reset Link</button>
+      <p class="signup-link">Remembered it? <a href="index.html">Login</a></p>
+    </form>
+  </div>
+  <script src="api.js"></script>
+  <script src="forget.js"></script>
+</body>
+</html>

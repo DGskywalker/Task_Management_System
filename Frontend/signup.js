@@ -1,5 +1,3 @@
-const BASE_URL = 'https://task-management-system-d7gl.onrender.com'; // ✅ CHANGE THIS TO YOUR ACTUAL BACKEND URL
-
 document.getElementById('signup-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -15,13 +13,12 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     });
 
     const data = await res.json();
-    console.log(data);
 
     if (res.status === 201) {
       alert('Signup successful!');
       window.location.href = 'index.html';
     } else {
-      alert(data.message || 'Signup failed');
+      alert(data.errors ? data.errors.join('\n') : (data.message || 'Signup failed'));
     }
   } catch (err) {
     console.error(err);

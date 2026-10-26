@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BASE_URL = 'https://task-management-system-d7gl.onrender.com'; // ✅ Replace with your actual Render backend URL if different
-  
+    // BASE_URL, apiFetch and escapeHtml come from api.js
     const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) return (window.location.href = 'index.html');
-  
+    if (!user || !getToken()) return (window.location.href = 'index.html');
+
+    document.getElementById('logout-link')?.addEventListener('click', clearSession);
+
     // 👤 Load user info
     document.getElementById('user-name').textContent = user.name;
     document.getElementById('welcome-name').textContent = user.name;
@@ -73,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
       taskForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const taskData = {
-          userId: user.id,
           title: taskForm.title.value,
           description: taskForm.description.value,
           deadline: taskForm.deadline.value,
@@ -84,9 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
   
         try {
-          const res = await fetch(`${BASE_URL}/api/tasks/new`, {
+          const res = await apiFetch('/api/tasks', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(taskData)
           });
   
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             createTaskBtn.style.display = 'inline-block';
             loadTasks();
           } else {
-            alert(result.message || '❌ Failed to create task.');
+            alert(result.errors ? result.errors.join('\n') : (result.message || '❌ Failed to create task.'));
           }
         } catch (error) {
           console.error('❌ Error submitting task:', error);
@@ -109,9 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
     async function updateTaskStatus(taskId, newStatus) {
       try {
-        await fetch(`${BASE_URL}/api/tasks/${taskId}/status`, {
+        await apiFetch(`/api/tasks/${taskId}/status`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ status: newStatus })
         });
       } catch (err) {
@@ -121,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     async function deleteTask(taskId) {
       try {
-        await fetch(`${BASE_URL}/api/tasks/${taskId}`, { method: 'DELETE' });
+        await apiFetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
         loadTasks();
       } catch (err) {
         console.error('❌ Error deleting task:', err);
@@ -133,7 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
       spinner && (spinner.style.display = 'block');
   
       try {
-        const res = await fetch(`${BASE_URL}/api/tasks/user/${user.id}`);
+        const res = await apiFetch('/api/tasks');
+        if (!res.ok) throw new Error(`Failed to load tasks (${res.status})`);
         const { tasks } = await res.json();
   
         // 📊 Stats reset
@@ -161,9 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
           filteredTasks.sort((a, b) => order[a.priority] - order[b.priority]);
         } else if (sort === 'deadline') {
           filteredTasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-        } else {
-          filteredTasks.reverse(); // latest first
-        }
+        } // "latest" keeps the server order, which is newest first
   
         filteredTasks.forEach(task => {
           if (task.status === 'Completed') completed++;
@@ -183,11 +180,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
           taskCard.innerHTML = `
             <div>
-              <div class="task-title">${task.title}</div>
-              <div class="task-deadline">📅 ${task.deadline || 'No Deadline'}</div>
+              <div class="task-title">${escapeHtml(task.title)}</div>
+              <div class="task-deadline">📅 ${escapeHtml(task.deadline || 'No Deadline')}</div>
               <div class="task-status-text">
-                <strong>Status:</strong> ${task.status}
-                <span class="status-badge ${badgeClass}">${task.status}</span>
+                <strong>Status:</strong> ${escapeHtml(task.status)}
+                <span class="status-badge ${badgeClass}">${escapeHtml(task.status)}</span>
               </div>
             </div>
             <input type="range" min="0" max="100" value="${sliderValue}" class="status-slider" />
@@ -222,13 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
             taskListContainer.style.display = 'none';
             detailSection.style.display = 'block';
             detailContent.innerHTML = `
-              <h2>${task.title}</h2>
-              <p><strong>Description:</strong> ${task.description}</p>
-              <p><strong>Deadline:</strong> ${task.deadline || '—'}</p>
-              <p><strong>Category:</strong> ${task.category}</p>
-              <p><strong>Priority:</strong> ${task.priority}</p>
-              <p><strong>Status:</strong> ${task.status}</p>
-              <p><strong>Notes:</strong> ${task.notes || '—'}</p>
+              <h2>${escapeHtml(task.title)}</h2>
+              <p><strong>Description:</strong> ${escapeHtml(task.description || '—')}</p>
+              <p><strong>Deadline:</strong> ${escapeHtml(task.deadline || '—')}</p>
+              <p><strong>Category:</strong> ${escapeHtml(task.category || '—')}</p>
+              <p><strong>Priority:</strong> ${escapeHtml(task.priority)}</p>
+              <p><strong>Status:</strong> ${escapeHtml(task.status)}</p>
+              <p><strong>Notes:</strong> ${escapeHtml(task.notes || '—')}</p>
             `;
           });
   
